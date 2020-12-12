@@ -5,20 +5,21 @@
     <div class="projects-wrapper">
       <h2>Nazreen's Past Projects:</h2>
       <p>Here are some of the projects that I've worked on.</p>
-      <div v-for="project in projects" :key="project.title" class="project-item">
-        <h3>{{ project.title }}</h3>
-        <img :src="project.image" alt="project image">
-        <p>{{ project.description }}</p>
-        <h4>Tech stack:</h4>
-        <ul>
-          <li v-for="stack in project.techStack" :key="stack">{{ stack }}</li>
-        </ul>
-      </div>
+      <project-item
+        v-for="project in projects"
+        :key="project.title"
+        :title="project.title"
+        :image="project.image"
+        :description="project.description"
+        :techStack="project.techStack"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import ProjectItem from './components/ProjectItem.vue'
+
 const STACK_OPTIONS = {
   VUE: 'Vue.js',
   PHP: 'PHP',
@@ -27,6 +28,9 @@ const STACK_OPTIONS = {
 
 export default {
   name: 'App',
+  components: {
+    ProjectItem,
+  },
   data: () => ({
     copy: {
       title: "Nazreen's Portfolio",
