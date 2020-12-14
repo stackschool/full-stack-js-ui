@@ -98,11 +98,15 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: skyblue;
+}
 #app {
   font-family: Sans-serif, Helvetica, Arial;
+  background-color: white;
   padding: 20px;
-  margin: 0 auto;
-  max-width: 900px;
+  margin: 3vh auto;
+  max-width: 800px;
 }
 .input-group {
   margin: 10px 0;
