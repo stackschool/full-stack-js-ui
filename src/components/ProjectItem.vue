@@ -22,6 +22,19 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+h3 {
+  margin-top: 0px;
+}
+img {
+  width: 100%;
+  max-width: 400px;
+}
+.project-item {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  max-width: 600px;
+}
 </style>
