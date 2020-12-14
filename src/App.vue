@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-    <h1>{{ copy.title }}</h1>
-    <p>{{ copy.subtitle }}</p>
+    <app-header
+      :title="copy.title"
+      :subtitle="copy.subtitle"
+      :introduction="copy.introduction"
+    />
     <div class="projects-wrapper">
-      <h2>Nazreen's Past Projects:</h2>
+      <h2>My Past Projects</h2>
       <p>Here are some of the projects that I've worked on.</p>
       <project-item
         v-for="project in projects"
@@ -19,6 +22,7 @@
 
 <script>
 import ProjectItem from './components/ProjectItem.vue'
+import AppHeader from './components/AppHeader.vue'
 
 const STACK_OPTIONS = {
   VUE: 'Vue.js',
@@ -29,12 +33,14 @@ const STACK_OPTIONS = {
 export default {
   name: 'App',
   components: {
+    AppHeader,
     ProjectItem,
   },
   data: () => ({
     copy: {
       title: "Nazreen's Portfolio",
-      subtitle: "built using Vue.js and Node.js"
+      subtitle: "built using Vue.js and Node.js",
+      introduction: "Hi there, my name is Nazreen, and I'm a full stack web developer. Welcome to my portfolio."
     },
     projects: [
       {
@@ -64,5 +70,10 @@ export default {
 #app {
   font-family: Sans-serif, Helvetica, Arial;
   padding: 20px;
+  margin: 0 auto;
+  max-width: 900px;
+}
+.projects-wrapper {
+  margin-top: 50px;
 }
 </style>
