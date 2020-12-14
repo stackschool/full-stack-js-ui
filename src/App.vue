@@ -6,6 +6,8 @@
       :introduction="copy.introduction"
     />
     <div class="filter-wrapper">
+      <span>search for terms in project descriptions: </span>
+      <input type="text" v-model="search">
       <p>filter by tech stack:</p>
       <select v-model="filter.techStack">
         <option value="Vue.js">Vue.js</option>
@@ -14,7 +16,8 @@
       </select>
       <span @click="clearFilter">clear filter</span>
       <ul v-if="showResultsStatement">{{ filteredProjects.length }} projects that:
-        <li v-if="filter.techStack" class="filter-statement">Showing projects that used {{ filter.techStack }}</li>
+        <li v-if="filter.techStack" class="filter-statement">used {{ filter.techStack }}</li>
+        <li v-if="search.length > 0">has a description containing '{{ search }}'</li>
       </ul>
 
     </div>
@@ -54,13 +57,18 @@ export default {
   }),
   computed: {
     filteredProjects () {
+      let result = [...this.projects];
       if (this.filter.techStack) {
-        return this.projects.filter(project => {
+        result = this.projects.filter(project => {
           return project.techStack.includes(this.filter.techStack)
         })
-      } else {
-        return this.projects
       }
+      if (this.search.length > 0) {
+        result = this.projects.filter(project => {
+          return project.description.includes(this.search)
+        })
+      }
+      return result
     },
     showResultsStatement () {
       return this.filter.techStack || this.search.length > 0
