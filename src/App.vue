@@ -6,19 +6,31 @@
       :introduction="copy.introduction"
     />
     <div class="filter-wrapper">
-      <span>search for terms in project descriptions: </span>
-      <input type="text" v-model="search">
-      <p>filter by tech stack:</p>
-      <select v-model="filter.techStack">
-        <option value="Vue.js">Vue.js</option>
-        <option value="PHP">PHP</option>
-        <option value="Node.js">Node.js</option>
-      </select>
-      <span @click="clearFilter">clear filter</span>
-      <ul v-if="showResultsStatement">{{ filteredProjects.length }} projects that:
-        <li v-if="filter.techStack" class="filter-statement">used {{ filter.techStack }}</li>
-        <li v-if="search.length > 0">has a description containing '{{ search }}'</li>
-      </ul>
+
+      <div class="input-group">
+        <span>search for terms in project descriptions: </span>
+        <input type="text" v-model="search">
+        <span @click="clearSearch" class="clear">clear search</span>
+      </div>
+
+      <div class="input-group">
+        <span>filter by tech stack:</span>
+        <select v-model="filter.techStack">
+          <option value="Vue.js">Vue.js</option>
+          <option value="PHP">PHP</option>
+          <option value="Node.js">Node.js</option>
+        </select>
+        <span @click="clearFilter" class="clear">clear filter</span>
+      </div>
+
+      <div v-if="showResultsStatement">
+        <p>{{ filteredProjects.length }} project{{ filteredProjects.length > 1 ? 's' : '' }} that:</p>
+        <ul>
+          <li v-if="filter.techStack" class="filter-statement">used {{ filter.techStack }}</li>
+          <li v-if="search.length > 0">has a description containing '{{ search }}'</li>
+        </ul>
+      </div>
+
 
     </div>
     <div class="projects-wrapper">
@@ -65,7 +77,7 @@ export default {
       }
       if (this.search.length > 0) {
         result = this.projects.filter(project => {
-          return project.description.includes(this.search)
+          return project.description.toLowerCase().includes(this.search.toLowerCase())
         })
       }
       return result
@@ -77,6 +89,9 @@ export default {
   methods: {
     clearFilter() {
       this.filter.techStack = null;
+    },
+    clearSearch() {
+      this.search = "";
     }
   }
 }
@@ -89,7 +104,16 @@ export default {
   margin: 0 auto;
   max-width: 900px;
 }
+.input-group {
+  margin: 10px 0;
+}
+.input-group > * {
+  margin-right: 10px;
+}
 .projects-wrapper {
   margin-top: 50px;
+}
+.clear {
+  cursor: pointer;
 }
 </style>
