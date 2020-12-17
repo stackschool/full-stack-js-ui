@@ -51,7 +51,8 @@
 <script>
 import ProjectItem from './components/ProjectItem.vue';
 import AppHeader from './components/AppHeader.vue';
-import { copy, projects } from './js/state';
+import { copy } from './js/state';
+import { listProjects } from './js/api';
 
 export default {
   name: 'App',
@@ -61,7 +62,7 @@ export default {
   },
   data: () => ({
     copy,
-    projects,
+    projects: [],
     search: '',
     filter: {
       techStack: null
@@ -85,6 +86,9 @@ export default {
     showResultsStatement () {
       return this.filter.techStack || this.search.length > 0
     }
+  },
+  async created() {
+    this.projects = await listProjects();
   },
   methods: {
     clearFilter() {
